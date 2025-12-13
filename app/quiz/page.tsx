@@ -61,6 +61,7 @@ export default function QuizPage() {
         numeroPregunta={preguntaActual + 1}
         totalPreguntas={preguntas.length}
         onRespuesta={manejarRespuesta}
+        usarTemporizador={true} 
       />
     </div>
   );

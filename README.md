@@ -8,6 +8,7 @@ Una aplicación web interactiva de quiz desarrollada con Next.js, que presenta p
 - ✅ Retroalimentación inmediata
 - ✅ Sistema de puntuación
 - ✅ Resumen de resultados
+- ✅ Temporizador
 - ✅ Diseño responsive
 
 ## 💻 Tecnologías

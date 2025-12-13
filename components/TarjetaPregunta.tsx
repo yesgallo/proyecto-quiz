@@ -1,33 +1,52 @@
-'use client';
-
-import { useState } from 'react';
+'use client'
+import { useState, useEffect } from 'react';
 import { Pregunta } from '@/types/quiz';
 import OpcionRespuesta from './OpcionRespuesta';
+import Temporizador from './Temporizador';
 
 interface TarjetaPreguntaProps {
   pregunta: Pregunta;
   numeroPregunta: number;
   totalPreguntas: number;
   onRespuesta: (esCorrecta: boolean, indiceRespuesta: number) => void;
+  usarTemporizador?: boolean;
 }
 
 export default function TarjetaPregunta({
   pregunta,
   numeroPregunta,
   totalPreguntas,
-  onRespuesta
+  onRespuesta,
+  usarTemporizador = false
 }: TarjetaPreguntaProps) {
   const [respuestaSeleccionada, setRespuestaSeleccionada] = useState<number | null>(null);
   const [respuestaRevelada, setRespuestaRevelada] = useState(false);
+  const [temporizadorActivo, setTemporizadorActivo] = useState(true);
 
   const manejarSeleccion = (index: number) => {
     if (respuestaRevelada) return;
     setRespuestaSeleccionada(index);
   };
 
+  const manejarTiempoAgotado = () => {
+    if (respuestaRevelada) return;
+    
+    setTemporizadorActivo(false);
+    setRespuestaRevelada(true);
+    
+    setTimeout(() => {
+      // Si no seleccionó nada, se marca como incorrecta con índice -1
+      onRespuesta(false, respuestaSeleccionada ?? -1);
+      setRespuestaSeleccionada(null);
+      setRespuestaRevelada(false);
+      setTemporizadorActivo(true);
+    }, 2000);
+  };
+
   const confirmarRespuesta = () => {
     if (respuestaSeleccionada === null) return;
     
+    setTemporizadorActivo(false); 
     setRespuestaRevelada(true);
     const esCorrecta = respuestaSeleccionada === pregunta.respuestaCorrecta;
     
@@ -35,11 +54,27 @@ export default function TarjetaPregunta({
       onRespuesta(esCorrecta, respuestaSeleccionada);
       setRespuestaSeleccionada(null);
       setRespuestaRevelada(false);
+      setTemporizadorActivo(true);
     }, 2000);
   };
 
+  useEffect(() => {
+    setTemporizadorActivo(true);
+  }, [pregunta.id]);
+
   return (
     <div className="bg-white rounded-xl shadow-2xl p-8 max-w-3xl w-full mx-auto">
+      {/* NUEVO: Temporizador */}
+      {usarTemporizador && (
+        <div className="mb-6">
+          <Temporizador
+            tiempoInicial={60}
+            onTiempoAgotado={manejarTiempoAgotado}
+            activo={temporizadorActivo && !respuestaRevelada}
+          />
+        </div>
+      )}
+
       {/* Contador de preguntas */}
       <div className="flex justify-between items-center mb-6">
         <span className="text-sm font-semibold text-gray-500">
@@ -84,7 +119,9 @@ export default function TarjetaPregunta({
               ? 'text-green-800' 
               : 'text-red-800'
           }`}>
-            {respuestaSeleccionada === pregunta.respuestaCorrecta 
+            {respuestaSeleccionada === null
+              ? '¡Tiempo agotado! ⏰'
+            :respuestaSeleccionada === pregunta.respuestaCorrecta 
               ? '¡Correcto! 🎉' 
               : 'Incorrecto 😞'}
           </p>
