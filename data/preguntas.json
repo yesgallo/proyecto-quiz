@@ -1,0 +1,124 @@
+{
+  "preguntas": [
+    {
+      "id": 1,
+      "pregunta": "¿Qué es Next.js?",
+      "opciones": [
+        "Una base de datos",
+        "Un framework de React",
+        "Un lenguaje de programación",
+        "Un editor de código"
+      ],
+      "respuestaCorrecta": 1,
+      "explicacion": "Next.js es un framework de React para producción que permite renderizado del lado del servidor."
+    },
+    {
+      "id": 2,
+      "pregunta": "¿Cuál es el hook de React para manejar estado?",
+      "opciones": [
+        "useEffect",
+        "useState",
+        "useContext",
+        "useReducer"
+      ],
+      "respuestaCorrecta": 1,
+      "explicacion": "useState es el hook básico para manejar estado en componentes funcionales."
+    },
+    {
+      "id": 3,
+      "pregunta": "¿Qué significa SSR en Next.js?",
+      "opciones": [
+        "Server Side Rendering",
+        "Static Site Rendering",
+        "Simple Server Response",
+        "Secure Socket Rendering"
+      ],
+      "respuestaCorrecta": 0,
+      "explicacion": "SSR significa Server Side Rendering, una característica clave de Next.js."
+    },
+    {
+      "id": 4,
+      "pregunta": "¿Qué carpeta se usa para rutas en Next.js 13+?",
+      "opciones": [
+        "pages",
+        "routes",
+        "app",
+        "src"
+      ],
+      "respuestaCorrecta": 2,
+      "explicacion": "La carpeta 'app' es el nuevo App Router introducido en Next.js 13."
+    },
+    {
+      "id": 5,
+      "pregunta": "¿Qué es Tailwind CSS?",
+      "opciones": [
+        "Una librería de JavaScript",
+        "Un framework de CSS utility-first",
+        "Un preprocesador CSS",
+        "Un sistema de componentes"
+      ],
+      "respuestaCorrecta": 1,
+      "explicacion": "Tailwind CSS es un framework utility-first que facilita el diseño con clases predefinidas."
+    },
+    {
+      "id": 6,
+      "pregunta": "¿Cuál es el puerto por defecto de Next.js?",
+      "opciones": [
+        "8080",
+        "3000",
+        "5000",
+        "4200"
+      ],
+      "respuestaCorrecta": 1,
+      "explicacion": "Next.js corre por defecto en el puerto 3000."
+    },
+    {
+      "id": 7,
+      "pregunta": "¿Qué comando inicia el servidor de desarrollo?",
+      "opciones": [
+        "npm start",
+        "npm run dev",
+        "next start",
+        "npm build"
+      ],
+      "respuestaCorrecta": 1,
+      "explicacion": "npm run dev inicia el servidor de desarrollo de Next.js."
+    },
+    {
+      "id": 8,
+      "pregunta": "¿Qué es JSX?",
+      "opciones": [
+        "Un lenguaje de programación",
+        "Una extensión de sintaxis para JavaScript",
+        "Una base de datos",
+        "Un framework CSS"
+      ],
+      "respuestaCorrecta": 1,
+      "explicacion": "JSX es una extensión de sintaxis que permite escribir HTML en JavaScript."
+    },
+    {
+      "id": 9,
+      "pregunta": "¿Qué hook se usa para efectos secundarios?",
+      "opciones": [
+        "useState",
+        "useEffect",
+        "useCallback",
+        "useMemo"
+      ],
+      "respuestaCorrecta": 1,
+      "explicacion": "useEffect se usa para manejar efectos secundarios como llamadas a APIs."
+    },
+    {
+      "id": 10,
+      "pregunta": "¿Qué significa npm?",
+      "opciones": [
+        "New Programming Method",
+        "Node Package Manager",
+        "Next Project Manager",
+        "Network Protocol Module"
+      ],
+      "respuestaCorrecta": 1,
+      "explicacion": "npm es el Node Package Manager, el gestor de paquetes de Node.js."
+    }
+  ]
+}
