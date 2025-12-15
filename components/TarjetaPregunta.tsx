@@ -93,7 +93,7 @@ export default function TarjetaPregunta({
       </h2>
 
       {/* Opciones */}
-      <div className="space-y-4 mb-6">
+      <div className="space-y-4 text-gray-800 mb-6">
         {pregunta.opciones.map((opcion, index) => (
           <OpcionRespuesta
             key={index}

@@ -23,13 +23,13 @@ export default function ResultadosFinales({
     if (porcentaje >= 90) return { texto: '¡Excelente! 🌟', color: 'text-green-600' };
     if (porcentaje >= 70) return { texto: '¡Muy bien! 👏', color: 'text-blue-600' };
     if (porcentaje >= 50) return { texto: '¡Buen intento! 💪', color: 'text-yellow-600' };
-    return { texto: 'Sigue practicando 📚', color: 'text-orange-600' };
+    return { texto: 'Seguí practicando 📚', color: 'text-purple-600' };
   };
 
   const mensaje = obtenerMensaje();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-500 via-pink-500 to-red-500 p-4 py-12">
+    <div className="min-h-screen bg-linear-to-br from-purple-500 via-pink-500 to-red-500 p-4 py-12">
       <div className="max-w-4xl mx-auto">
         {/* Tarjeta de Resultados Principales */}
         <div className="bg-white rounded-2xl shadow-2xl p-10 mb-8 text-center">
@@ -38,7 +38,7 @@ export default function ResultadosFinales({
           </h1>
           
           <div className="my-8">
-            <div className="text-7xl font-bold text-blue-600 mb-2">
+            <div className="text-7xl font-bold text-purple-600 mb-2">
               {puntuacion}/{totalPreguntas}
             </div>
             <div className="text-3xl font-semibold text-gray-600">
@@ -52,7 +52,7 @@ export default function ResultadosFinales({
 
           <button
             onClick={onReiniciar}
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold text-xl py-4 px-12 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+            className="bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold text-xl py-4 px-12 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
           >
             Reiniciar Quiz 🔄
           </button>
