@@ -20,10 +20,10 @@ Una aplicación web interactiva de quiz desarrollada con Next.js, que presenta p
 
 ## 📦 Instalación
 
-\`\`\`bash
+```bash
 npm install
 npm run dev
-\`\`\`
+```
 
 ## 🎯 Autora
 
