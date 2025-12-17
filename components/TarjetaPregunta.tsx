@@ -8,7 +8,7 @@ interface TarjetaPreguntaProps {
   pregunta: Pregunta;
   numeroPregunta: number;
   totalPreguntas: number;
-  onRespuesta: (esCorrecta: boolean, indiceRespuesta: number) => void;
+  onRespuesta: (esCorrecta: boolean, indiceRespuesta: number, tiempoAgotado?: boolean) => void;
   usarTemporizador?: boolean;
 }
 
@@ -22,6 +22,7 @@ export default function TarjetaPregunta({
   const [respuestaSeleccionada, setRespuestaSeleccionada] = useState<number | null>(null);
   const [respuestaRevelada, setRespuestaRevelada] = useState(false);
   const [temporizadorActivo, setTemporizadorActivo] = useState(true);
+  const [tiempoAgotado, setTiempoAgotado] = useState(false);
 
   const manejarSeleccion = (index: number) => {
     if (respuestaRevelada) return;
@@ -33,38 +34,37 @@ export default function TarjetaPregunta({
     
     setTemporizadorActivo(false);
     setRespuestaRevelada(true);
-    
+    setTiempoAgotado(true);
+
+    // Pasar automáticamente después de 2 segundos
     setTimeout(() => {
-      // Si no seleccionó nada, se marca como incorrecta con índice -1
-      onRespuesta(false, respuestaSeleccionada ?? -1);
-      setRespuestaSeleccionada(null);
-      setRespuestaRevelada(false);
-      setTemporizadorActivo(true);
+      onRespuesta(false, -1, true); 
     }, 2000);
   };
 
   const confirmarRespuesta = () => {
     if (respuestaSeleccionada === null) return;
     
-    setTemporizadorActivo(false); 
+    setTemporizadorActivo(false);
     setRespuestaRevelada(true);
-    const esCorrecta = respuestaSeleccionada === pregunta.respuestaCorrecta;
-    
-    setTimeout(() => {
-      onRespuesta(esCorrecta, respuestaSeleccionada);
-      setRespuestaSeleccionada(null);
-      setRespuestaRevelada(false);
-      setTemporizadorActivo(true);
-    }, 2000);
   };
 
+  const siguientePregunta = () => {
+    if (respuestaSeleccionada === null) return;
+    const esCorrecta = respuestaSeleccionada === pregunta.respuestaCorrecta;
+    onRespuesta(esCorrecta, respuestaSeleccionada, false);
+  };
+
+  // Resetear estados cuando cambie la pregunta
   useEffect(() => {
+    setRespuestaSeleccionada(null);
+    setRespuestaRevelada(false);
     setTemporizadorActivo(true);
+    setTiempoAgotado(false);
   }, [pregunta.id]);
 
   return (
     <div className="bg-white rounded-xl shadow-2xl p-8 max-w-3xl w-full mx-auto">
-      {/* NUEVO: Temporizador */}
       {usarTemporizador && (
         <div className="mb-6">
           <Temporizador
@@ -110,20 +110,24 @@ export default function TarjetaPregunta({
       {/* Mensaje de retroalimentación */}
       {respuestaRevelada && (
         <div className={`p-4 rounded-lg mb-4 ${
-          respuestaSeleccionada === pregunta.respuestaCorrecta 
-            ? 'bg-green-100 border-2 border-green-500' 
-            : 'bg-red-100 border-2 border-red-500'
+          tiempoAgotado
+            ? 'bg-orange-100 border-2 border-orange-500'
+            : respuestaSeleccionada === pregunta.respuestaCorrecta 
+              ? 'bg-green-100 border-2 border-green-500' 
+              : 'bg-red-100 border-2 border-red-500'
         }`}>
           <p className={`font-bold text-lg ${
-            respuestaSeleccionada === pregunta.respuestaCorrecta 
-              ? 'text-green-800' 
-              : 'text-red-800'
+            tiempoAgotado
+              ? 'text-orange-800'
+              : respuestaSeleccionada === pregunta.respuestaCorrecta 
+                ? 'text-green-800' 
+                : 'text-red-800'
           }`}>
-            {respuestaSeleccionada === null
-              ? '¡Tiempo agotado! ⏰'
-            :respuestaSeleccionada === pregunta.respuestaCorrecta 
-              ? '¡Correcto! 🎉' 
-              : 'Incorrecto 😞'}
+            {tiempoAgotado
+              ? '⏰ ¡Tiempo agotado! -1 punto'
+              : respuestaSeleccionada === pregunta.respuestaCorrecta 
+                ? '¡Correcto! 🎉 +1 punto' 
+                : 'Incorrecto 😞'}
           </p>
           {pregunta.explicacion && (
             <p className="text-gray-700 mt-2">{pregunta.explicacion}</p>
@@ -131,8 +135,9 @@ export default function TarjetaPregunta({
         </div>
       )}
 
-      {/* Botón confirmar */}
-      {!respuestaRevelada && (
+      {/* Botones de acción */}
+      {!respuestaRevelada ? (
+        // Botón Confirmar - Solo cuando NO se ha revelado la respuesta
         <button
           onClick={confirmarRespuesta}
           disabled={respuestaSeleccionada === null}
@@ -144,6 +149,16 @@ export default function TarjetaPregunta({
         >
           Confirmar Respuesta
         </button>
+      ) : (
+        // Botón Siguiente - Aparece después de confirmar (pero NO cuando el tiempo se agotó)
+        !tiempoAgotado && (
+          <button
+            onClick={siguientePregunta}
+            className="w-full py-4 rounded-lg font-bold text-lg bg-gradient-to-r from-green-600 to-purple-600 hover:from-green-700 hover:to-purple-700 text-white cursor-pointer shadow-lg hover:shadow-xl transition-all transform hover:scale-[1.02]"
+          >
+            {numeroPregunta === totalPreguntas ? 'Ver Resultados 🏆' : 'Siguiente Pregunta →'}
+          </button>
+        )
       )}
     </div>
   );

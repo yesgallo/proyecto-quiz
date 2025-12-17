@@ -14,7 +14,12 @@ export default function QuizPage() {
 
   const preguntas = preguntasData.preguntas;
 
-  const manejarRespuesta = (esCorrecta: boolean, indiceRespuesta: number) => {
+  const manejarRespuesta = (
+    esCorrecta: boolean, 
+    indiceRespuesta: number, 
+    tiempoAgotado: boolean = false
+  ) => {
+
     // Guardar la respuesta
     const nuevaRespuesta: RespuestaUsuario = {
       preguntaId: preguntas[preguntaActual].id,
@@ -22,7 +27,22 @@ export default function QuizPage() {
       esCorrecta
     };
 
-    setRespuestas([...respuestas, nuevaRespuesta]);
+    const nuevasRespuestas = [...respuestas, nuevaRespuesta];
+    setRespuestas(nuevasRespuestas);
+
+  // Calcular nueva puntuación
+    let nuevaPuntuacion = puntuacion;
+    
+    if (tiempoAgotado) {
+      // Si el tiempo se agotó, restar 1 punto (pero no puede ser negativa)
+      nuevaPuntuacion = Math.max(0, puntuacion - 1);
+    } else if (esCorrecta) {
+      // Si es correcta, sumar 1 punto
+      nuevaPuntuacion = puntuacion + 1;
+    }
+    // Si es incorrecta (no por tiempo), la puntuación no cambia
+
+    setPuntuacion(nuevaPuntuacion);
 
     // Actualizar puntuación
     if (esCorrecta) {
@@ -34,14 +54,16 @@ export default function QuizPage() {
       setPreguntaActual(preguntaActual + 1);
     } else {
       // Guardar datos en localStorage y redirigir
-      localStorage.setItem('puntuacion', String(puntuacion + (esCorrecta ? 1 : 0)));
-      localStorage.setItem('respuestas', JSON.stringify([...respuestas, nuevaRespuesta]));
-      router.push('/resultados');
+      localStorage.setItem('puntuacion', String(nuevaPuntuacion));
+      localStorage.setItem('respuestas', JSON.stringify(nuevasRespuestas));
+      setTimeout(() => {
+        router.push('/resultados');
+      }, 500);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 py-12 px-4">
+    <div className="min-h-screen bg-linear-to-br from-indigo-500 via-purple-500 to-pink-500 py-12 px-4">
       {/* Barra de puntuación */}
       <div className="max-w-3xl mx-auto mb-6">
         <div className="bg-white rounded-lg shadow-lg p-4 flex justify-between items-center">
