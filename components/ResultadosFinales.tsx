@@ -34,7 +34,7 @@ export default function ResultadosFinales({
   const mensaje = obtenerMensaje();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-500 via-pink-500 to-red-500 p-4 py-12">
+    <div className="min-h-screen bg-linear-to-br from-purple-500 via-pink-500 to-red-500 p-4 py-12">
       <div className="max-w-4xl mx-auto">
         {/* Tarjeta de Resultados Principales */}
         <div className="bg-white rounded-2xl shadow-2xl p-10 mb-8 text-center">
@@ -73,7 +73,7 @@ export default function ResultadosFinales({
 
           <button
             onClick={onReiniciar}
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold text-xl py-4 px-12 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+            className="bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold text-xl py-4 px-12 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
           >
             Reiniciar Quiz 🔄
           </button>

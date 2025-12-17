@@ -137,7 +137,7 @@ export default function TarjetaPregunta({
 
       {/* Botones de acción */}
       {!respuestaRevelada ? (
-        // Botón Confirmar - Solo cuando NO se ha revelado la respuesta
+        // Botón Confirmar Respuesta
         <button
           onClick={confirmarRespuesta}
           disabled={respuestaSeleccionada === null}
@@ -150,11 +150,11 @@ export default function TarjetaPregunta({
           Confirmar Respuesta
         </button>
       ) : (
-        // Botón Siguiente - Aparece después de confirmar (pero NO cuando el tiempo se agotó)
+        // Botón Siguiente - Aparece después de confirmar 
         !tiempoAgotado && (
           <button
             onClick={siguientePregunta}
-            className="w-full py-4 rounded-lg font-bold text-lg bg-gradient-to-r from-green-600 to-purple-600 hover:from-green-700 hover:to-purple-700 text-white cursor-pointer shadow-lg hover:shadow-xl transition-all transform hover:scale-[1.02]"
+            className="w-full py-4 rounded-lg font-bold text-lg bg-linear-to-r from-green-600 to-purple-600 hover:from-green-700 hover:to-purple-700 text-white cursor-pointer shadow-lg hover:shadow-xl transition-all transform hover:scale-[1.02]"
           >
             {numeroPregunta === totalPreguntas ? 'Ver Resultados 🏆' : 'Siguiente Pregunta →'}
           </button>
