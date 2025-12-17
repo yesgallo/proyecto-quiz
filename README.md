@@ -27,4 +27,4 @@ npm run dev
 
 ## 🎯 Autora
 
-Tu Nombre - [GitHub](https://github.com/yesgallo)
+Yesica Gallo - [GitHub](https://github.com/yesgallo)
